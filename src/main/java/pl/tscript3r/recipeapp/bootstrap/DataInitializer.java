@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import pl.tscript3r.recipeapp.model.*;
 import pl.tscript3r.recipeapp.repositories.CategoryRepository;
 import pl.tscript3r.recipeapp.repositories.RecipeRepository;
@@ -32,6 +33,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     }
 
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         recipeRepository.saveAll(getRecipes());
         logger.info("Bootstrap data loaded");
