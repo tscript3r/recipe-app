@@ -1,5 +1,6 @@
 package pl.tscript3r.recipeapp.bootstrap;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class DataInitializer implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -36,6 +38,8 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     }
 
     private List<Recipe> getRecipes() {
+
+        log.debug("Loading bootstrap data");
 
         List<Recipe> recipes = new ArrayList<>(2);
 
@@ -75,6 +79,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         if(!cupsUomOptional.isPresent()){
             throw new RuntimeException("Expected UOM Not Found");
         }
+        log.debug("Units of measure are found in the DB");
 
         //get optionals
         UnitOfMeasure eachUom = eachUomOptional.get();
@@ -96,6 +101,8 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         if(!mexicanCategoryOptional.isPresent()){
             throw new RuntimeException("Expected Category Not Found");
         }
+
+        log.debug("Categories are found in the DB");
 
         Category americanCategory = americanCategoryOptional.get();
         Category mexicanCategory = mexicanCategoryOptional.get();
@@ -144,6 +151,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
 
         //add to return list
         recipes.add(guacRecipe);
+        log.debug("Added Guacamole recipe");
 
         //Yummy Tacos
         Recipe tacosRecipe = new Recipe();
@@ -202,6 +210,10 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         tacosRecipe.getCategories().add(mexicanCategory);
 
         recipes.add(tacosRecipe);
+        log.debug("Added taco recipe");
+
+
+        log.debug("Bootstrap data loaded");
         return recipes;
     }
 }
