@@ -1,0 +1,10 @@
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/openjdk:8-jdk
+
+  environment:
+    JVM_OPTS: -Xmx3200m
+    TERM: dumb
+
+version: 2
