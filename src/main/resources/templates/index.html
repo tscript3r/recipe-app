@@ -24,21 +24,20 @@
             <div class="panel panel-primary">
 
                 <div class="panel-heading">
-                    <h1 class="panel-title">My Recipes</h1>
+                    <h1 class="panel-title">My Recipes!</h1>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive" th:if="${not #lists.isEmpty(recipes)}">
                         <table class="table table-hover ">
                             <thead class="thead-inverse">
-                            <tr>
-                                <th>ID</th>
-                                <th>Description</th>
-                            </tr>
-                            </thead>
+
                             <tr th:each="recipe : ${recipes}">
-                                <td th:text="${recipe.id}">334</td>
-                                <td th:text="${recipe.description}">Tasty Goodnees 3</td>
+                                <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
+                                <td th:text="${recipe.id}"></td>
+                                <td th:text="${recipe.description}"></td>
+                                <td><a href="#" th:href="@{'/recipe/show/' + ${recipe.id}}">View</a></td>
                             </tr>
+
                         </table>
                     </div>
                 </div>
