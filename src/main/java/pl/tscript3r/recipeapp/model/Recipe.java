@@ -1,6 +1,5 @@
 package pl.tscript3r.recipeapp.model;
 
-import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -44,8 +43,8 @@ public class Recipe {
     private Set<Category> categories = new HashSet<>();
 
     public void setNotes(Notes notes) {
-        notes.setRecipe(this);
         this.notes = notes;
+        notes.setRecipe(this);
     }
 
     public Recipe addIngredient(Ingredient ingredient) {
