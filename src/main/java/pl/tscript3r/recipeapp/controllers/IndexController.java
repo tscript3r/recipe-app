@@ -6,8 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.tscript3r.recipeapp.services.RecipeService;
 
-import java.util.Optional;
-
 @Slf4j
 @Controller
 public class IndexController {
