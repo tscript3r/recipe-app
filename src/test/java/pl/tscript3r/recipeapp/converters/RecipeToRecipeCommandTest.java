@@ -87,7 +87,7 @@ public class RecipeToRecipeCommandTest {
         assertNotNull(command);
         assertEquals(RECIPE_ID, command.getId());
         assertEquals(COOK_TIME, command.getCookTime());
-        assertEquals(PREP_TIME, command.getPrepTime());
+        assertEquals(PREP_TIME, command.getPreparationTime());
         assertEquals(DESCRIPTION, command.getDescription());
         assertEquals(DIFFICULTY, command.getDifficulty());
         assertEquals(DIRECTIONS, command.getDirections());
