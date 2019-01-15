@@ -6,9 +6,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
 public class IngredientCommand {
 
     private Long id;

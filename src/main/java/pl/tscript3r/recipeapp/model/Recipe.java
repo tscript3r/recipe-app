@@ -11,7 +11,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Recipe {
 
