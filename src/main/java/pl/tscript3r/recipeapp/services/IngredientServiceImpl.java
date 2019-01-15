@@ -11,6 +11,7 @@ import pl.tscript3r.recipeapp.model.Recipe;
 import pl.tscript3r.recipeapp.repositories.RecipeRepository;
 import pl.tscript3r.recipeapp.repositories.UnitOfMeasureRepository;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Slf4j
@@ -97,6 +98,24 @@ public class IngredientServiceImpl implements IngredientService {
             return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
         }
 
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long recipeId, Long ingredientId) {
+        Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
+        if(recipeOptional.isPresent()){
+            Optional<Ingredient> ingredientOptional = recipeOptional.get().getIngredients().stream()
+                    .filter(recipeIngredient -> recipeIngredient.getId().equals(ingredientId))
+                    .findFirst();
+            if(ingredientOptional.isPresent()) {
+                ingredientOptional.get().setRecipe(null);
+                recipeOptional.get().getIngredients().remove(ingredientOptional.get());
+                recipeRepository.save(recipeOptional.get());
+            } else
+                log.debug("Given [id=" + ingredientId + "] ingredient id was not found");
+        } else
+            log.debug("Given [id=" + recipeId + "] recipe id was not found");
     }
 
 }

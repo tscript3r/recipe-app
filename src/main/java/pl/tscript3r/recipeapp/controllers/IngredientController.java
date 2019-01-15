@@ -11,8 +11,6 @@ import pl.tscript3r.recipeapp.services.IngredientService;
 import pl.tscript3r.recipeapp.services.RecipeService;
 import pl.tscript3r.recipeapp.services.UnitOfMeasureService;
 
-import javax.persistence.Lob;
-
 @Slf4j
 @Controller
 public class IngredientController {
@@ -85,5 +83,14 @@ public class IngredientController {
         log.debug("saved ingredient id:" + savedCommand.getId());
 
         return "redirect:/recipe/" + savedCommand.getRecipeId() + "/ingredient/" + savedCommand.getId() + "/show";
+    }
+
+    @GetMapping
+    @RequestMapping("/recipe/{recipeId}/ingredient/{id}/delete")
+    public String deleteIngredient(@PathVariable String recipeId,
+                                   @PathVariable String id) {
+        log.debug("Deleting ingredient [recipeId=" + recipeId + "; ingredientId=" + id + "]");
+        ingredientService.deleteById(Long.valueOf(recipeId), Long.valueOf(id));
+        return "redirect:/recipe/" + recipeId + "/ingredients";
     }
 }

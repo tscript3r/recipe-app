@@ -17,6 +17,7 @@ import pl.tscript3r.recipeapp.repositories.UnitOfMeasureRepository;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
@@ -112,4 +113,24 @@ public class IngredientServiceImplTest {
 
     }
 
+    @Test
+    public void testDeleteRecipeIngredientById() throws Exception {
+        // given
+        Optional<Ingredient> ingredientOptional = Optional.of(new Ingredient());
+        ingredientOptional.get().setId(1L);
+        Optional<Recipe> recipeOptional = Optional.of(new Recipe());
+        recipeOptional.get().addIngredient(ingredientOptional.get());
+        recipeOptional.get().setId(1L);
+
+        // when
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        when(recipeRepository.save(any())).thenReturn(recipeOptional.get());
+
+        ingredientService.deleteById(1L, 1L);
+
+        // then
+        assertFalse(recipeOptional.get().getIngredients().contains(ingredientOptional.get()));
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, times(1)).save(any(Recipe.class));
+    }
 }
