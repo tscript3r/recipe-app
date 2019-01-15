@@ -33,6 +33,11 @@
                                     <label>Recipe Description:</label>
                                     <input type="text" class="form-control" th:field="*{description}"/>
                                 </div>
+
+                                <div class="col-md-1">
+                                    <a class="btn btn-default" href="#"
+                                       th:href="@{'/recipe/' + ${recipe.id} + '/image'}" role="button">Change Image</a>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-3 form-group">
@@ -64,10 +69,10 @@
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Difficulty:</label>
-                                    <select class="form-control">
-                                        <option>Easy</option>
-                                        <option>Medium</option>
-                                        <option>Hard</option>
+                                    <select class="form-control" th:field="*{difficulty}">
+                                        <option th:each="difficultyValue : ${T(pl.tscript3r.recipeapp.model.Difficulty).values()}"
+                                                th:value="${difficultyValue.name()}"
+                                                th:text="${difficultyValue.name()}"></option>
                                     </select>
                                 </div>
                             </div>

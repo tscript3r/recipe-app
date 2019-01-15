@@ -26,12 +26,11 @@
                         <h1 class="panel-title" th:text="${recipe.description}">Recipe Description</h1>
                     </div>
                     <div class="panel-body">
-                        <div class="row">
 
+                        <div class="row">
                             <div class="col-md-3">
                                 <h5>Categories:</h5>
                             </div>
-
 
                             <div class="col-md-9">
                                 <ul>
@@ -39,8 +38,11 @@
                                 </ul>
                             </div>
 
-                        </div>
-                        <div class="row">
+                            <div class="col-md-6">
+                                <img th:src="@{'/recipe/' + ${recipe.id} + '/recipeimage'}"
+                                     width="200" height="200">
+                            </div>
+
                             <div class="col-md-3">
                                 <h5>Prep Time:</h5>
                             </div>
