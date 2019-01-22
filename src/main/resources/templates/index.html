@@ -29,6 +29,13 @@
                         <table class="table table-hover ">
                             <thead class="thead-inverse">
 
+                            <tr>
+                                <th>ID</th>
+                                <th th:text="#{recipe.description}">Description</th>
+                                <th th:text="#{recipe.view}">View</th>
+                                <th th:text="#{recipe.update}">Update</th>
+                                <th th:text="#{recipe.delete}">Delete</th>
+                            </tr>
                             <tr th:each="recipe : ${recipes}">
                                 <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
                                 <td th:text="${recipe.id}"></td>
