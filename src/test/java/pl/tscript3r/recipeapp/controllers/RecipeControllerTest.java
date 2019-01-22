@@ -104,7 +104,16 @@ public class RecipeControllerTest {
 
         mockMvc.perform(get("/recipe/5/show"))
                 .andExpect(status().isNotFound())
-                .andExpect(view().name("404"));
+                .andExpect(view().name("404"))
+                .andExpect(model().attributeExists("exception"));
+    }
+
+    @Test
+    public void testNumberFormatException() throws Exception {
+        mockMvc.perform(get("/recipe/XYF/show"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400"))
+                .andExpect(model().attributeExists("exception"));
     }
 
 }
