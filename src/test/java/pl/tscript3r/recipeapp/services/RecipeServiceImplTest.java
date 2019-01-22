@@ -7,6 +7,7 @@ import org.mockito.MockitoAnnotations;
 import pl.tscript3r.recipeapp.commands.RecipeCommand;
 import pl.tscript3r.recipeapp.converters.RecipeCommandToRecipe;
 import pl.tscript3r.recipeapp.converters.RecipeToRecipeCommand;
+import pl.tscript3r.recipeapp.exceptions.NotFoundException;
 import pl.tscript3r.recipeapp.model.Recipe;
 import pl.tscript3r.recipeapp.repositories.RecipeRepository;
 
@@ -98,7 +99,13 @@ public class RecipeServiceImplTest {
         Long idToDelete = Long.valueOf(2L);
         recipeService.deleteById(idToDelete);
         verify(recipeRepository, times(1)).deleteById(anyLong());
+    }
 
+    @Test(expected = NotFoundException.class)
+    public void testNotFoundException() throws Exception {
+        Optional<Recipe> recipeOptional = Optional.empty();
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        Recipe recipeReturned = recipeService.findById(1L);
     }
 
 }
