@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.tscript3r.recipeapp.commands.IngredientCommand;
 import pl.tscript3r.recipeapp.converters.IngredientCommandToIngredient;
 import pl.tscript3r.recipeapp.converters.IngredientToIngredientCommand;
+import pl.tscript3r.recipeapp.exceptions.NotFoundException;
 import pl.tscript3r.recipeapp.model.Ingredient;
 import pl.tscript3r.recipeapp.model.Recipe;
 import pl.tscript3r.recipeapp.repositories.RecipeRepository;
@@ -45,7 +46,7 @@ public class IngredientServiceImpl implements IngredientService {
                         .map(ingredient -> ingredientToIngredientCommand.convert(ingredient)).findFirst();
 
         if (!ingredientCommandOptional.isPresent())
-            throw new RuntimeException("Ingredient ID: " + ingredientId + " not found");
+            throw new NotFoundException("Ingredient ID: " + ingredientId + " not found");
 
         return ingredientCommandOptional.get();
     }
