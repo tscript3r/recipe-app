@@ -1,21 +1,19 @@
 package pl.tscript3r.recipeapp.services;
 
-import net.bytebuddy.asm.Advice;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 import pl.tscript3r.recipeapp.model.Recipe;
 import pl.tscript3r.recipeapp.repositories.RecipeRepository;
 
 import java.io.IOException;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
@@ -35,14 +33,14 @@ public class ImageServiceImplTest {
 
     @Test
     public void saveImageFileTest() throws IOException {
-        Long id = 1L;
+        String id = "1";
         MockMultipartFile multipartFile = new MockMultipartFile("imagefile", "testing.txt", "text/plain",
                 "Spring Framework Guru".getBytes());
         Recipe recipe = new Recipe();
-        recipe.setId(1L);
+        recipe.setId("1");
         Optional<Recipe> recipeOptional = Optional.of(recipe);
 
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
         ArgumentCaptor<Recipe> argumentCaptor = ArgumentCaptor.forClass(Recipe.class);
 
         imageService.saveImageFile(id, multipartFile);

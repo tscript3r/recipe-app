@@ -10,13 +10,13 @@ public class CategoryTest {
     Category category;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         category = new Category();
     }
 
     @Test
     public void getId() throws Exception {
-        Long idValue = 4L;
+        String idValue = "4";
         category.setId(idValue);
         assertEquals(idValue, category.getId());
     }

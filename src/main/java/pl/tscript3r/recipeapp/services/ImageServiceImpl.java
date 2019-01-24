@@ -19,7 +19,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public void saveImageFile(Long recipeId, MultipartFile file) {
+    public void saveImageFile(String recipeId, MultipartFile file) {
         log.debug("Received image file for recipeId=" + recipeId);
         log.debug("File size: " + (file.getSize() / 1024) + "kB");
 
@@ -28,7 +28,7 @@ public class ImageServiceImpl implements ImageService {
             Byte[] byteObjects = new Byte[file.getBytes().length];
 
             int i = 0;
-            for(byte b : file.getBytes()) {
+            for (byte b : file.getBytes()) {
                 byteObjects[i++] = b;
             }
 

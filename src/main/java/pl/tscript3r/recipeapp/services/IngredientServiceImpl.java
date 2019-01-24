@@ -12,7 +12,6 @@ import pl.tscript3r.recipeapp.model.Recipe;
 import pl.tscript3r.recipeapp.repositories.RecipeRepository;
 import pl.tscript3r.recipeapp.repositories.UnitOfMeasureRepository;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Slf4j
@@ -34,7 +33,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long ingredientId) {
+    public IngredientCommand findByRecipeIdAndIngredientId(String recipeId, String ingredientId) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
         if (!recipeOptional.isPresent())
             throw new RuntimeException("Recipe ID: " + recipeId + " not found");
@@ -42,8 +41,8 @@ public class IngredientServiceImpl implements IngredientService {
         Recipe recipe = recipeOptional.get();
 
         Optional<IngredientCommand> ingredientCommandOptional = recipe.getIngredients().stream()
-                        .filter(ingredient -> ingredient.getId().equals(ingredientId))
-                        .map(ingredient -> ingredientToIngredientCommand.convert(ingredient)).findFirst();
+                .filter(ingredient -> ingredient.getId().equals(ingredientId))
+                .map(ingredient -> ingredientToIngredientCommand.convert(ingredient)).findFirst();
 
         if (!ingredientCommandOptional.isPresent())
             throw new NotFoundException("Ingredient ID: " + ingredientId + " not found");
@@ -56,7 +55,7 @@ public class IngredientServiceImpl implements IngredientService {
     public IngredientCommand saveIngredientCommand(IngredientCommand command) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(command.getRecipeId());
 
-        if(!recipeOptional.isPresent()){
+        if (!recipeOptional.isPresent()) {
             log.error("Recipe not found for id: " + command.getRecipeId());
             return new IngredientCommand();
         } else {
@@ -68,7 +67,7 @@ public class IngredientServiceImpl implements IngredientService {
                     .filter(ingredient -> ingredient.getId().equals(command.getId()))
                     .findFirst();
 
-            if(ingredientOptional.isPresent()){
+            if (ingredientOptional.isPresent()) {
                 Ingredient ingredientFound = ingredientOptional.get();
                 ingredientFound.setDescription(command.getDescription());
                 ingredientFound.setAmount(command.getAmount());
@@ -88,7 +87,7 @@ public class IngredientServiceImpl implements IngredientService {
                     .filter(recipeIngredients -> recipeIngredients.getId().equals(command.getId()))
                     .findFirst();
 
-            if(!savedIngredientOptional.isPresent()){
+            if (!savedIngredientOptional.isPresent()) {
                 savedIngredientOptional = savedRecipe.getIngredients().stream()
                         .filter(recipeIngredients -> recipeIngredients.getDescription().equals(command.getDescription()))
                         .filter(recipeIngredients -> recipeIngredients.getAmount().equals(command.getAmount()))
@@ -103,13 +102,13 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     @Transactional
-    public void deleteById(Long recipeId, Long ingredientId) {
+    public void deleteById(String recipeId, String ingredientId) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
-        if(recipeOptional.isPresent()){
+        if (recipeOptional.isPresent()) {
             Optional<Ingredient> ingredientOptional = recipeOptional.get().getIngredients().stream()
                     .filter(recipeIngredient -> recipeIngredient.getId().equals(ingredientId))
                     .findFirst();
-            if(ingredientOptional.isPresent()) {
+            if (ingredientOptional.isPresent()) {
                 ingredientOptional.get().setRecipe(null);
                 recipeOptional.get().getIngredients().remove(ingredientOptional.get());
                 recipeRepository.save(recipeOptional.get());
