@@ -40,5 +40,10 @@ jobs:
           path: target/surefire-reports
 
       - run:
-          name: Send to CodeCov
-          command: bash <(curl -s https://codecov.io/bash)
+          name: "Aggregate test results"
+          when: always
+          command: |
+            mkdir -p $CIRCLE_TEST_REPORTS/junit/
+            find . -type f -regex ".*/target/.*-reports/.*" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+            find . -type f -regex ".*/build/test-results/.*" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+            bash <(curl -s https://codecov.io/bash)
